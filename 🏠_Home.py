@@ -9,9 +9,13 @@ st.set_page_config(
 st.title("Customer Churn Predictor")
 st.image("C:\\Users\\AndrewMore\\Downloads\\Home page.jpg", caption="", use_column_width=True)
 
+<<<<<<< HEAD
+st.write("This prediction app gives stakeholders the opportunity to predict if customers will churn based on some features")
+=======
 st.write("This prediction app gives stakeholders the opportunity to predict if customers will churn based on some features")
 
 
 
 
 
+>>>>>>> dev

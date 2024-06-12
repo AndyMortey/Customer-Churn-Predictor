@@ -15,9 +15,10 @@ data_info = {
     "Column": ["CustomerID", "Gender", "SeniorCitizen", "Partner", "Dependents", "Tenure", 
                "PhoneService", "MultipleLines", "InternetService", "OnlineSecurity", 
                "Online Backup", "Device Protection", "Tech SUpport", "StreamingTV", "Streaming Movies", "Contract", "Paperless Billing", "Payment Method", "Montly Charges", "Total Charges", "Churn"],
-    "Description": ["Unique Customer ID", "Male or Female", "0, 1, 2, 3", "Yes or No", "Yes or No", "Yes or No", "Number of Years at company", "Yes or No", 
-                    "Yes or No", "Yes or No", "DSL, Fiber Optic", "Yes or No", "Yes or No", "Yes or No", "Yes or No","One Year, Month to Moth, Two years", "Yes or No", "Mailed Check, Credit card, Electronic check, Bank transfer", 
-                    "Charges per month", "total charges throughout contract", "Yes or No"    
+    "Values": ["Unique Customer ID", "Male or Female", "0, 1", "Yes or No", "Yes or No", "Number of Years at Company", "Yes or No", 
+                    "Yes, No, No Phone Service", "DSL, Fiber Optic, No", "Yes, No, No Internet Service", "Yes, No, No Internet Service", "Yes, No, No Internet Service", "Yes, No, No Internet Service", "Yes, No, No Internet Service", "Yes, No, No Internet Service",
+                    "One Year, Month to Month, Two years", "Yes or No", "Mailed Check, Credit card, Electronic check, Bank transfer", 
+                    "Charges per Month", "Total Charges throughout Contract", "Yes or No"    
                     ]
 }
 
@@ -64,8 +65,8 @@ df = get_all_column()
 selection = st.selectbox("Select...", options=["All columns", "Numerical columns", "Categorical columns"])
 
 # Define numerical and categorical columns
-numerical_columns = ["tenure", "MonthlyCharges", "TotalCharges"]
-categorical_columns = ["customerID", "gender", "Partner", "SeniorCitizen","Dependents", "PhoneService", "MultipleLines", "InternetService", "OnlineSecurity", 
+numerical_columns = ["Tenure", "MonthlyCharges", "TotalCharges"]
+categorical_columns = ["customerID", "Gender", "Partner", "SeniorCitizen","Dependents", "PhoneService", "MultipleLines", "InternetService", "OnlineSecurity", 
                        "OnlineBackup", "DeviceProtection", "TechSupport", "StreamingTV", "StreamingMovies", "Contract", "PaperlessBilling", 
                        "PaymentMethod", "Churn"]
 

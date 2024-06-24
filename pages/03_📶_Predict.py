@@ -151,3 +151,6 @@ if __name__ == "__main__":
         
         st.markdown(f"#### Probability of Churn: {probability[1] * 100:.2f}%")
         st.progress(probability[1])
+
+
+

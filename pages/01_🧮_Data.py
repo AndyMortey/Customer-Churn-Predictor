@@ -2,70 +2,87 @@ import streamlit as st
 import pyodbc
 import pandas as pd
 
+# Set page configuration
 st.set_page_config(
     page_title="Customer Churn Database",
     page_icon="🧮",
     layout="wide"
 )
 
-st.title("Customer Churn Database🧮")
+st.title("Customer Churn Database 🧮")
 
-# Creating a DataFrame for data information
+# Data Information
 data_info = {
     "Column": ["CustomerID", "Gender", "SeniorCitizen", "Partner", "Dependents", "Tenure", 
                "PhoneService", "MultipleLines", "InternetService", "OnlineSecurity", 
-               "Online Backup", "Device Protection", "Tech SUpport", "StreamingTV", "Streaming Movies", "Contract", "Paperless Billing", "Payment Method", "Montly Charges", "Total Charges", "Churn"],
-    "Description": ["Unique Customer ID", "Male or Female", "0, 1, 2, 3", "Yes or No", "Yes or No", "Yes or No", "Number of Years at company", "Yes or No", 
-                    "Yes or No", "Yes or No", "DSL, Fiber Optic", "Yes or No", "Yes or No", "Yes or No", "Yes or No","One Year, Month to Moth, Two years", "Yes or No", "Mailed Check, Credit card, Electronic check, Bank transfer", 
-                    "Charges per month", "total charges throughout contract", "Yes or No"    
-                    ]
+               "OnlineBackup", "DeviceProtection", "TechSupport", "StreamingTV", "StreamingMovies", 
+               "Contract", "PaperlessBilling", "PaymentMethod", "MonthlyCharges", "TotalCharges", "Churn"],
+    "Values": ["Unique Customer ID", "Male or Female", "0, 1", "Yes or No", "Yes or No", 
+               "Number of Years at Company", "Yes or No", "Yes, No, No Phone Service", 
+               "DSL, Fiber Optic, No", "Yes, No, No Internet Service", 
+               "Yes, No, No Internet Service", "Yes, No, No Internet Service", 
+               "Yes, No, No Internet Service", "Yes, No, No Internet Service", 
+               "Yes, No, No Internet Service", "One Year, Month to Month, Two years", 
+               "Yes or No", "Mailed Check, Credit Card, Electronic Check, Bank Transfer", 
+               "Charges per Month", "Total Charges throughout Contract", "Yes or No"]
 }
 
 df_info = pd.DataFrame(data_info)
 
-# Displaying the DataFrame as a table
-st.text("Data Features")
+# Display data information
+st.markdown("<h2>Data Features</h2>", unsafe_allow_html=True)
 st.table(df_info)
 
-## Creating a connection to the database 
-## Querying the database
+# Database connection
 @st.cache_resource(show_spinner="Connecting to database...")
 def init_connection():
-    return pyodbc.connect(
-        "DRIVER={ODBC Driver 17 for SQL Server};SERVER="
-        + st.secrets["server"]
-        + ";DATABASE="
-        + st.secrets["database"]
-        + ";UID="
-        + st.secrets["username"]
-        + ";PWD="
-        + st.secrets["password"]
-    )
+    try:
+        conn = pyodbc.connect(
+            "DRIVER={ODBC Driver 17 for SQL Server};SERVER="
+            + st.secrets["server"]
+            + ";DATABASE="
+            + st.secrets["database"]
+            + ";UID="
+            + st.secrets["username"]
+            + ";PWD="
+            + st.secrets["password"]
+        )
+        return conn
+    except Exception as e:
+        st.error(f"Error connecting to database: {e}")
+        return None
 
 connection = init_connection()
 
 @st.cache_data(show_spinner="Running query...")
 def running_query(query):
-    with connection.cursor() as cursor:
-        cursor.execute(query)
-        rows = cursor.fetchall()
-        df = pd.DataFrame.from_records(rows, columns=[column[0] for column in cursor.description])
-    return df
+    if connection:
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                rows = cursor.fetchall()
+                df = pd.DataFrame.from_records(rows, columns=[column[0] for column in cursor.description])
+            return df
+        except Exception as e:
+            st.error(f"Error running query: {e}")
+            return pd.DataFrame()
+    else:
+        return pd.DataFrame()
 
 def get_all_column():
-    sql_query = """SELECT * FROM LP2_Telco_churn_first_3000"""
-    df = running_query(sql_query)
-    return df
+    sql_query = "SELECT * FROM LP2_Telco_churn_first_3000"
+    return running_query(sql_query)
 
-st.markdown("<h2 style='font-size:24px;'>Full Dataset</h2>", unsafe_allow_html=True)
-# Main script to display the data
+# Main script to display data
+st.markdown("<h2>Full Dataset</h2>", unsafe_allow_html=True)
 df = get_all_column()
-#st.write(df)
-selection = st.selectbox("Select...", options=["All columns", "Numerical columns", "Categorical columns"])
+
+# Column selection
+selection = st.selectbox("Select columns to display", options=["All columns", "Numerical columns", "Categorical columns"])
 
 # Define numerical and categorical columns
 numerical_columns = ["tenure", "MonthlyCharges", "TotalCharges"]
-categorical_columns = ["customerID", "gender", "Partner", "SeniorCitizen","Dependents", "PhoneService", "MultipleLines", "InternetService", "OnlineSecurity", 
+categorical_columns = ["gender", "Partner", "SeniorCitizen", "Dependents", "PhoneService", "MultipleLines", "InternetService", "OnlineSecurity", 
                        "OnlineBackup", "DeviceProtection", "TechSupport", "StreamingTV", "StreamingMovies", "Contract", "PaperlessBilling", 
                        "PaymentMethod", "Churn"]
 
@@ -77,5 +94,16 @@ elif selection == "Categorical columns":
 else:
     df_filtered = df
 
-
+# Display the filtered DataFrame
 st.write(df_filtered)
+
+# Option to visualize numerical columns
+if selection in ["Numerical columns", "All columns"]:
+    st.markdown("<h2>Visualizations</h2>", unsafe_allow_html=True)
+    for column in numerical_columns:
+        st.write(f"Distribution of {column}")
+        st.bar_chart(df[column])
+
+
+
+

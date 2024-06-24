@@ -14,22 +14,33 @@ This repository contains a comprehensive solution for deploying a trained model 
 * 📶Predict Page
 * 🗓️History Page
 * 🤖Models Used
-* 📄Documentation
-* 🤝Contributing
-* 👩‍💻Author
-* 🏅License
+
+### 4.📄Documentation
+### 5. 🤝Contributing
+### 6. 👩‍💻Author
+### 7. 🏅License
 
 ### Project Structure
-├── .github/                         # GitHub configurations
-├── assets/                          # Images and other assets
-├── Data/                            # Sample datasets
-├── Models/                          # Pre-trained models
-├── Pages/                           # Streamlit app pages
-│   ├── Home.py                      # Home page
-│   ├── Data.py                      # Data page
-│   ├── Predict.py                   # Prediction page
-│   ├── History.py                   # History page
-│   └── Dashboard.py                 # Dashboard page
-├── app.py                           # Main Streamlit app
-├── README.md                        # Project README file
-└── requirements.txt                 # Python dependencies
+├── assets/ &nbsp;&nbsp;&nbsp; This contains Images and other assets
+                                               
+├── Data/   &nbsp;&nbsp;&nbsp;  This has the Sample datasets
+
+├── Models/  &nbsp;&nbsp;&nbsp; This contains the Pre-trained models
+
+├── Pages/   &nbsp;&nbsp;&nbsp; Streamlit App pages
+
+│   ├── Home.py &nbsp;&nbsp;&nbsp;  Home page
+
+│   ├── Data.py &nbsp;&nbsp;&nbsp;  Data page
+
+│   ├── Predict.py  &nbsp;&nbsp;&nbsp; Prediction page
+
+│   ├── History.py  &nbsp;&nbsp;&nbsp; History page
+
+│   └── Dashboard.py  &nbsp;&nbsp;&nbsp; Dashboard page
+
+├── app.py  &nbsp;&nbsp;&nbsp;  Main Streamlit app
+
+├── README.md  &nbsp;&nbsp;&nbsp;  Project README file
+
+└── requirements.txt  &nbsp;&nbsp;&nbsp; Python dependencies

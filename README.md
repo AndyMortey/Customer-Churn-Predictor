@@ -1,30 +1,36 @@
 # Customer-Churn-Predictor
-This repository contains a comprehensive solution for deploying a trained model using Streamlit to provide an interactive web application for real-time churn prediction.
 
-## 📜Table of Contents
+## Overview
 
-### 1. [⚙️Features](Features)
+This repository contains a comprehensive solution for deploying a trained model using Streamlit to provide an interactive web application for real-time churn prediction. The project demonstrates embedding Machine Learning models into a user-friendly interface using Streamlit. It enables third-party stakeholders, who might not have technical expertise, to interact with and utilize machine learning models without needing to delve into the complexities of Jupyter notebooks.
 
-### 2. [🧱Project Structure](ProjectStructure)
+## 📜 Table of Contents
 
-### 3. [Pages](Pages)
-* [🏡Home Page](HomePage)
-* [🧮Data Page](DataPage)
-* [📊Dashboard Page](DashboardPage)
-* [📶Predict Page](PredictPage)
-* [🗓️History Page](HistoryPage)
-* [🤖Models Used](ModelsUsed)
+### 1. [⚙️ Features](#features)
 
-### 4.[📄Resources](Resources)
-### 5. [🤝Appreciation](Appreciation)
-### 6. [👩‍💻Tags](Tags)
+### 2. [🧱 Project Structure](#project-structure)
+
+### 3. [Pages](#pages)
+- [🏡 Home Page](#home-page)
+- [🧮 Data Page](#data-page)
+- [📊 Dashboard Page](#dashboard-page)
+- [📶 Predict Page](#prediction-page)
+- [🗓️ History Page](#history-page)
+- [🤖 Models Used](#models-used)
+
+### 4. [📄 Resources](#resources)
+
+### 5. [🤝 Appreciation](#appreciation)
+
+### 6. [👩‍💻 Tags](#tags)
 
 ## Features
-* Interactive Interface: Easy-to-use Streamlit interface for interacting with ML models.
-* Data Visualization: Graphs and charts to visualize data insights.
-* Model Predictions: User-friendly forms for model input and output predictions.
-* Historical Data: Track and display prediction history.
-* Dashboards: Comprehensive dashboards for data analysis.
+
+- **Interactive Interface:** Easy-to-use Streamlit interface for interacting with ML models.
+- **Data Visualization:** Graphs and charts to visualize data insights.
+- **Model Predictions:** User-friendly forms for model input and output predictions.
+- **Historical Data:** Track and display prediction history.
+- **Dashboards:** Comprehensive dashboards for data analysis.
 
 ## Project Structure
 ├── assets/ &nbsp;&nbsp;&nbsp; This contains Images and other assets
@@ -50,32 +56,49 @@ This repository contains a comprehensive solution for deploying a trained model 
 ├── README.md  &nbsp;&nbsp;&nbsp;  Project README file
 
 └── requirements.txt  &nbsp;&nbsp;&nbsp; Python dependencies
+
+
 ## Pages
+
 ### Home Page
-* Introduction to the application and its features.
-* Navigation to other pages.
+
+- Introduction to the application and its features.
+- Navigation to other pages.
+
 ### Data Page
-* Upload and explore datasets.
-* Visualize data distributions and relationships.
-### Prediction Page
-* Input data for predictions.
-* Display prediction results from the machine learning model.
-### History Page
-* View and manage historical predictions.
-* Analyze past predictions for trends and accuracy.
+
+- Upload and explore datasets.
+- Visualize data distributions and relationships.
+
 ### Dashboard Page
-* Detailed dashboards displaying model performance and data insights.
-* Interactive visualizations and reports.
+
+- Detailed dashboards displaying model performance and data insights.
+- Interactive visualizations and reports.
+
+### Prediction Page
+
+- Input data for predictions.
+- Display prediction results from the machine learning model.
+
+### History Page
+
+- View and manage historical predictions.
+- Analyze past predictions for trends and accuracy.
+
 ### Models Used
-* Logistic Regression Model
-* Gradient Boosting Model
+
+- Logistic Regression Model
+- Gradient Boosting Model
+
 ## Resources
-* The article published on medium can be accessed via this
-* The App
+
+- The article published on Medium can be accessed via [this link](#).
+- The App can be accessed [here](#).
+
 ## Appreciation
-I highly recommend Azubi Africa for their comprehensive and effective programs. Read More articles about [Azubi Africa here](https://medium.com/@azubiafrica) and take a few minutes to visit this link to learn more about Azubi Africa life-changing [programs](https://bit.ly/41CGCwK)
+
+I highly recommend Azubi Africa for their comprehensive and effective programs. Read more articles about [Azubi Africa here](https://medium.com/@azubiafrica) and take a few minutes to visit this link to learn more about Azubi Africa life-changing [programs](https://bit.ly/41CGCwK).
+
 ## Tags
+
 [Azubi Data Science](https://bit.ly/3ARq742)
-
-
-

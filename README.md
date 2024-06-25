@@ -92,8 +92,8 @@ This repository contains a comprehensive solution for deploying a trained model 
 
 ## Resources
 
-- The article published on Medium can be accessed via [this link](#).
-- The App can be accessed [here](#).
+- The article published on Medium can be accessed via [this link](https://medium.com/@morteyandrews/the-customer-churn-predictor-app-bf44dcbad53d).
+- Link to deployed App [here](https://customer-churn-predictor-66q1.onrender.com/).
 
 ## Appreciation
 

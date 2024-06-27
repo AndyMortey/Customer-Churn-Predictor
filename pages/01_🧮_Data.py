@@ -1,6 +1,8 @@
 import streamlit as st
-import pyodbc
 import pandas as pd
+import streamlit_authenticator as stauth
+import yaml
+from yaml.loader import SafeLoader
 
 # Set page configuration
 st.set_page_config(
@@ -9,101 +11,93 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("Customer Churn Database 🧮")
+# Load configuration for authentication
+with open('config.yaml') as file:
+    config = yaml.load(file, Loader=SafeLoader)
 
-# Data Information
-data_info = {
-    "Column": ["CustomerID", "Gender", "SeniorCitizen", "Partner", "Dependents", "Tenure", 
-               "PhoneService", "MultipleLines", "InternetService", "OnlineSecurity", 
-               "OnlineBackup", "DeviceProtection", "TechSupport", "StreamingTV", "StreamingMovies", 
-               "Contract", "PaperlessBilling", "PaymentMethod", "MonthlyCharges", "TotalCharges", "Churn"],
-    "Values": ["Unique Customer ID", "Male or Female", "0, 1", "Yes or No", "Yes or No", 
-               "Number of Years at Company", "Yes or No", "Yes, No, No Phone Service", 
-               "DSL, Fiber Optic, No", "Yes, No, No Internet Service", 
-               "Yes, No, No Internet Service", "Yes, No, No Internet Service", 
-               "Yes, No, No Internet Service", "Yes, No, No Internet Service", 
-               "Yes, No, No Internet Service", "One Year, Month to Month, Two years", 
-               "Yes or No", "Mailed Check, Credit Card, Electronic Check, Bank Transfer", 
-               "Charges per Month", "Total Charges throughout Contract", "Yes or No"]
-}
+authenticator = stauth.Authenticate(
+    config['credentials'],
+    config['cookie']['name'],
+    config['cookie']['key'],
+    config['cookie']['expiry_days'],
+    config['pre-authorized']
+)
 
-df_info = pd.DataFrame(data_info)
+# Authentication
+name, authentication_status, username = authenticator.login("Login", "sidebar")
 
-# Display data information
-st.markdown("<h2>Data Features</h2>", unsafe_allow_html=True)
-st.table(df_info)
+if st.session_state["authentication_status"]:
+    authenticator.logout("Logout", "sidebar") 
 
-# Database connection
-@st.cache_resource(show_spinner="Connecting to database...")
-def init_connection():
-    try:
-        conn = pyodbc.connect(
-            "DRIVER={ODBC Driver 17 for SQL Server};SERVER="
-            + st.secrets["server"]
-            + ";DATABASE="
-            + st.secrets["database"]
-            + ";UID="
-            + st.secrets["username"]
-            + ";PWD="
-            + st.secrets["password"]
-        )
-        return conn
-    except Exception as e:
-        st.error(f"Error connecting to database: {e}")
-        return None
+    st.title("Customer Churn Database 🧮")
 
-connection = init_connection()
+    # Load dataset
+    df = pd.read_csv('Datasets\merged_dataset.csv')
 
-@st.cache_data(show_spinner="Running query...")
-def running_query(query):
-    if connection:
-        try:
-            with connection.cursor() as cursor:
-                cursor.execute(query)
-                rows = cursor.fetchall()
-                df = pd.DataFrame.from_records(rows, columns=[column[0] for column in cursor.description])
-            return df
-        except Exception as e:
-            st.error(f"Error running query: {e}")
-            return pd.DataFrame()
+    # Full dataset section
+    st.markdown("<h2 style='font-size:24px;'>Full Dataset</h2>", unsafe_allow_html=True)
+
+    # Dataset filtering options
+    selection = st.selectbox("Select columns to display:", 
+                             options=["All columns", "Numerical columns", "Categorical columns"])
+
+    # Define numerical and categorical columns
+    numerical_columns = ["tenure", "MonthlyCharges", "TotalCharges"]
+    categorical_columns = ["gender", "Partner", "SeniorCitizen", "Dependents", "PhoneService", "MultipleLines", 
+                           "InternetService", "OnlineSecurity", "OnlineBackup", "DeviceProtection", "TechSupport", 
+                           "StreamingTV", "StreamingMovies", "Contract", "PaperlessBilling", "PaymentMethod", "Churn"]
+
+    # Filter the DataFrame based on user selection
+    if selection == "Numerical columns":
+        df_filtered = df[numerical_columns]
+    elif selection == "Categorical columns":
+        df_filtered = df[categorical_columns]
     else:
-        return pd.DataFrame()
+        df_filtered = df
 
-def get_all_column():
-    sql_query = "SELECT * FROM LP2_Telco_churn_first_3000"
-    return running_query(sql_query)
+    # Display filtered DataFrame
+    st.dataframe(df_filtered)
 
-# Main script to display data
-st.markdown("<h2>Full Dataset</h2>", unsafe_allow_html=True)
-df = get_all_column()
+    # Upload CSV file section
+    st.markdown("<h2 style='font-size:24px;'>Upload CSV File</h2>", unsafe_allow_html=True)
 
-# Column selection
-selection = st.selectbox("Select columns to display", options=["All columns", "Numerical columns", "Categorical columns"])
+    uploaded_file = st.file_uploader("Choose a CSV file", type=['csv'])
 
-# Define numerical and categorical columns
-numerical_columns = ["tenure", "MonthlyCharges", "TotalCharges"]
-categorical_columns = ["gender", "Partner", "SeniorCitizen", "Dependents", "PhoneService", "MultipleLines", "InternetService", "OnlineSecurity", 
-                       "OnlineBackup", "DeviceProtection", "TechSupport", "StreamingTV", "StreamingMovies", "Contract", "PaperlessBilling", 
-                       "PaymentMethod", "Churn"]
+    if uploaded_file is not None:
+        uploaded_df = pd.read_csv(uploaded_file)
+        
+        st.write("Uploaded Data:")
+        st.dataframe(uploaded_df)
 
-# Filter the DataFrame based on user selection
-if selection == "Numerical columns":
-    df_filtered = df[numerical_columns]
-elif selection == "Categorical columns":
-    df_filtered = df[categorical_columns]
-else:
-    df_filtered = df
+        # Save uploaded file option
+        if st.button("Save Uploaded Data"):
+            uploaded_df.to_csv('Data/uploaded_data.csv', index=False)
+            st.success("Uploaded data saved successfully.")
 
-# Display the filtered DataFrame
-st.write(df_filtered)
+    # Additional Features Section
+    st.markdown("<h2 style='font-size:24px;'>Additional Features</h2>", unsafe_allow_html=True)
 
-# Option to visualize numerical columns
-if selection in ["Numerical columns", "All columns"]:
-    st.markdown("<h2>Visualizations</h2>", unsafe_allow_html=True)
-    for column in numerical_columns:
-        st.write(f"Distribution of {column}")
-        st.bar_chart(df[column])
+    # Display statistical summary
+    if st.checkbox("Show statistical summary"):
+        st.write(df_filtered.describe())
 
+    # Plot histograms for numerical columns
+    if st.checkbox("Show histograms for numerical columns"):
+        st.subheader("Histograms for Numerical Columns")
+        for column in numerical_columns:
+            st.write(f"Histogram for {column}")
+            st.hist(df_filtered[column], bins=30, alpha=0.7)
+            st.pyplot()
 
+    # Display correlation matrix
+    if st.checkbox("Show correlation matrix"):
+        st.subheader("Correlation Matrix")
+        correlation_matrix = df_filtered.corr()
+        st.dataframe(correlation_matrix)
 
-
+elif st.session_state["authentication_status"] is False:
+    st.error("Wrong username/password")
+elif st.session_state["authentication_status"] is None:
+    st.info("Please login to access the website")
+    st.write("username: customerchurn")
+    st.write("password: 33333")

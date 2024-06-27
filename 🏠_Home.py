@@ -1,11 +1,10 @@
 import streamlit as st
-import streamlit as st
 import streamlit_authenticator as stauth
 import yaml
 from yaml.loader import SafeLoader
 
 st.set_page_config(
-    page_title = "Home Page",
+    page_title="Home Page",
     page_icon="🏠",
     layout="wide"
 )
@@ -14,6 +13,7 @@ st.set_page_config(
 with open('config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
 
+# Create authenticator object
 authenticator = stauth.Authenticate(
     config['credentials'],
     config['cookie']['name'],
@@ -23,10 +23,15 @@ authenticator = stauth.Authenticate(
 )
 
 # Authentication
-name, authentication_status, username = authenticator.login("Login", "sidebar")
+try:
+    name, authentication_status, username = authenticator.login(location="sidebar")
+except Exception as e:
+    st.error(f"Authentication error: {e}")
 
-if st.session_state["authentication_status"]:
+if st.session_state.get("authentication_status"):
     authenticator.logout("Logout", "sidebar")
+    st.title(f"Welcome, {name}!")
+    st.write("You're logged in. Navigate using the sidebar to access different sections.")
 
     # Main title and banner image
     st.title("Customer Churn Predictor")
@@ -96,17 +101,10 @@ if st.session_state["authentication_status"]:
         if st.button("View History"):
             st.write("Navigate to History Page")  # Replace with navigation logic if available
 
-elif st.session_state["authentication_status"] is False:
+elif st.session_state.get("authentication_status") is False:
     st.error("Wrong username/password")
-elif st.session_state["authentication_status"] is None:
+elif st.session_state.get("authentication_status") is None:
     st.info("Please login to access the website")
     st.write("**Default Username/Password:**")
     st.write("- Username: customerchurn")
     st.write("- Password: 33333")
-
-
-
-
-
-
-

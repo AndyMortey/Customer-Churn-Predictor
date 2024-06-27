@@ -24,10 +24,12 @@ authenticator = stauth.Authenticate(
 )
 
 # Authentication
-name, authentication_status, username = authenticator.login("Login", "sidebar")
+name, authentication_status, username = authenticator.login(fields=["Login"], location="sidebar")
 
 if st.session_state["authentication_status"]:
-    authenticator.logout("Logout", "sidebar") 
+    authenticator.logout("Logout", "sidebar")
+    st.title(f"Welcome, {name}!")
+    st.write("You're logged in. Navigate using the sidebar to access different sections.") 
 
     st.title("Customer Churn Database 🧮")
 
@@ -99,5 +101,6 @@ elif st.session_state["authentication_status"] is False:
     st.error("Wrong username/password")
 elif st.session_state["authentication_status"] is None:
     st.info("Please login to access the website")
-    st.write("username: customerchurn")
-    st.write("password: 33333")
+    st.write("**Default Username/Password:**")
+    st.write("- username: customerchurn")
+    st.write("- password: 33333")

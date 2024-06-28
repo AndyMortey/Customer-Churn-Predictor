@@ -35,17 +35,17 @@ if st.session_state["authentication_status"]:
     dashboard_selection = st.sidebar.selectbox("Select Dashboard", ['EDA Dashboard', 'KPI Dashboard'])
 
     selected_gender = st.sidebar.selectbox("Select Gender", ['All'] + df['gender'].unique().tolist())
-    selected_churn = st.sidebar.selectbox("Select Churn Status", ['All'] + df['Churn'].unique().tolist())
-    selected_contract = st.sidebar.selectbox("Select Contract Type", ['All'] + df['Contract'].unique().tolist())
+    selected_churn = st.sidebar.selectbox("Select Churn Status", ['All'] + df['churn'].unique().tolist())
+    selected_contract = st.sidebar.selectbox("Select Contract Type", ['All'] + df['contract'].unique().tolist())
     selected_tenure = st.sidebar.slider("Select Tenure Range", int(df['tenure'].min()), int(df['tenure'].max()), (int(df['tenure'].min()), int(df['tenure'].max())))
 
     filtered_df = df.copy()
     if selected_gender != 'All':
         filtered_df = filtered_df[filtered_df['gender'] == selected_gender]
     if selected_churn != 'All':
-        filtered_df = filtered_df[filtered_df['Churn'] == selected_churn]
+        filtered_df = filtered_df[filtered_df['churn'] == selected_churn]
     if selected_contract != 'All':
-        filtered_df = filtered_df[filtered_df['Contract'] == selected_contract]
+        filtered_df = filtered_df[filtered_df['contract'] == selected_contract]
     if selected_tenure:
         filtered_df = filtered_df[(filtered_df['tenure'] >= selected_tenure[0]) & (filtered_df['tenure'] <= selected_tenure[1])]
 
@@ -56,7 +56,7 @@ if st.session_state["authentication_status"]:
         st.write("Welcome to the Customer Churn Dashboard! 📊 Explore insightful visualizations and uncover trends in customer churn and behavior. Use the filters to dive deeper into contract types, gender distribution, and more. Let's discover valuable insights together! 📊")
 
         fig, ax = plt.subplots(figsize=(5, 3))
-        sns.countplot(data=filtered_df, x="Contract", hue="Churn", palette=palette_dict, ax=ax)
+        sns.countplot(data=filtered_df, x="contract", hue="churn", palette=palette_dict, ax=ax)
         ax.set_title('Contract Type by Churn', fontsize=10)
         ax.set_xlabel('Contract Type', fontsize=8)
         ax.set_ylabel('Count', fontsize=8)
@@ -66,7 +66,7 @@ if st.session_state["authentication_status"]:
         col1, col2 = st.columns(2)
         with col1:
             fig1, ax1 = plt.subplots()
-            churn_counts = filtered_df['Churn'].value_counts()
+            churn_counts = filtered_df['churn'].value_counts()
             explode = tuple([0.05] * len(churn_counts))
             ax1.pie(churn_counts, labels=churn_counts.index, autopct='%1.1f%%', explode=explode, colors=['brown', 'grey'])
             ax1.set_title('Churn Distribution', fontsize=10)
@@ -74,7 +74,7 @@ if st.session_state["authentication_status"]:
             st.write(" ")
 
             fig4, ax4 = plt.subplots()
-            sns.countplot(data=df, x="SeniorCitizen", hue="Churn", palette={"No": "grey", "Yes": "Brown"}, ax=ax4)
+            sns.countplot(data=df, x="SeniorCitizen", hue="churn", palette={"No": "grey", "Yes": "Brown"}, ax=ax4)
             ax4.set_title('Churn by Senior Citizen', fontsize=10)
             ax4.set_xlabel('Senior Citizen', fontsize=8)
             ax4.set_ylabel('Count', fontsize=8)
@@ -82,7 +82,7 @@ if st.session_state["authentication_status"]:
 
         with col2:
             fig2, ax2 = plt.subplots()
-            gender_churn_counts = filtered_df.groupby("gender")["Churn"].value_counts().unstack().fillna(0)
+            gender_churn_counts = filtered_df.groupby("gender")["churn"].value_counts().unstack().fillna(0)
             gender_churn_counts.plot(kind='bar', stacked=True, ax=ax2, color=['brown','grey'])
             ax2.set_title('Churn Distribution by Gender', fontsize=10)
             ax2.set_xlabel('Gender', fontsize=8)
@@ -90,7 +90,7 @@ if st.session_state["authentication_status"]:
             st.pyplot(fig2)
 
             fig3, ax3 = plt.subplots()
-            sns.countplot(data=df, x="PaymentMethod", hue="Churn", palette={"No": "grey", "Yes": "brown"}, ax=ax3)
+            sns.countplot(data=df, x="PaymentMethod", hue="churn", palette={"No": "grey", "Yes": "brown"}, ax=ax3)
             ax3.set_title('Payment Method Distribution by Churn', fontsize=10)
             ax3.set_xlabel('Payment Method', fontsize=8)
             ax3.set_ylabel('Count', fontsize=8)

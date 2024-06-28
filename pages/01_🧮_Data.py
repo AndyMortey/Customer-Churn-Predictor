@@ -1,5 +1,67 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import streamlit_authenticator as stauth
+import yaml
+from yaml.loader import SafeLoader
+
+st.set_page_config(
+    page_title="Data Page",
+    page_icon="🧮",
+    layout="wide"
+)
+
+# Load configuration for authentication
+with open('config.yaml') as file:
+    config = yaml.load(file, Loader=SafeLoader)
+
+authenticator = stauth.Authenticate(
+    config['credentials'],
+    config['cookie']['name'],
+    config['cookie']['key'],
+    config['cookie']['expiry_days'],
+    config['pre-authorized']
+)
+
+# Authentication
+name, authentication_status, username = authenticator.login(fields=["Login"], location="sidebar")
+
+if st.session_state["authentication_status"]:
+    authenticator.logout("Logout", "sidebar")
+    st.title(f"Welcome, {name}!")
+    st.write("You're logged in. Navigate using the sidebar to access different sections.")
+
+    # Example dataframe (replace with actual data)
+    df = pd.read_csv('data/clean_df.csv')  # Make sure this path is correct
+    df_filtered = df[['tenure', 'MonthlyCharges', 'TotalCharges']].dropna()
+
+    # Creating histograms for each numeric column
+    st.subheader("Histograms")
+    for column in df_filtered.columns:
+        st.write(f"Histogram for {column}")
+        fig, ax = plt.subplots()
+        ax.hist(df_filtered[column], bins=30, alpha=0.7, color='blue')
+        ax.set_title(f'Histogram of {column}')
+        ax.set_xlabel(column)
+        ax.set_ylabel('Frequency')
+        st.pyplot(fig)
+        st.write(" ")
+
+elif st.session_state["authentication_status"] is False:
+    st.error("Wrong username/password")
+elif st.session_state["authentication_status"] is None:
+    st.info("Please login to access the website")
+    st.write("**Default Username/Password:**")
+    st.write("- Username: customerchurn")
+    st.write("- Password: 33333")
+
+
+
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 import streamlit_authenticator as stauth
 import yaml
 from yaml.loader import SafeLoader
@@ -84,12 +146,17 @@ if st.session_state["authentication_status"]:
         st.write(df_filtered.describe())
 
     # Plot histograms for numerical columns
-    if st.checkbox("Show histograms for numerical columns"):
-        st.subheader("Histograms for Numerical Columns")
-        for column in numerical_columns:
-            st.write(f"Histogram for {column}")
-            st.hist(df_filtered[column], bins=30, alpha=0.7)
-            st.pyplot()
+    st.subheader("Histograms")
+    for column in df_filtered.columns:
+        st.write(f"Histogram for {column}")
+        fig, ax = plt.subplots()
+        sns.histplot(df_filtered[column], bins=30, kde=False, ax=ax, color='blue')
+        ax.set_title(f'Histogram of {column}')
+        ax.set_xlabel(column)
+        ax.set_ylabel('Frequency')
+        st.pyplot(fig)
+        st.write(" ")
+
 
     # Display correlation matrix
     if st.checkbox("Show correlation matrix"):
@@ -104,3 +171,4 @@ elif st.session_state["authentication_status"] is None:
     st.write("**Default Username/Password:**")
     st.write("- username: customerchurn")
     st.write("- password: 33333")
+

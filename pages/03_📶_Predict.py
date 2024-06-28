@@ -35,11 +35,11 @@ if st.session_state["authentication_status"]:
     st.title("Customer Churn Prediction")
 
     # Load trained models
-    @st.cache_resource
+    @st.cache_data(persist=True)
     def load_LR_pipeline():
         return joblib.load("Models/LR_Pipeline.joblib")
 
-    @st.cache_resource
+    @st.cache_data(persist=True)
     def load_GB_pipeline():
         return joblib.load("Models/GB_Pipeline.joblib")
 

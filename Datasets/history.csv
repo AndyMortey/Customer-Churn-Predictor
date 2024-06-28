@@ -1,3 +1,7 @@
 gender,seniorcitizen,partner,dependents,tenure,phoneservice,multiplelines,internetservice,onlinesecurity,onlinebackup,deviceprotection,techsupport,streamingtv,streamingmovies,contract,paperlessbilling,paymentmethod,monthlycharges,totalcharges,prediction,probability,time_of_prediction,model_used
 Male,0,Yes,Yes,6,Yes,Yes,DSL,Yes,Yes,Yes,Yes,Yes,Yes,Month-to-month,Yes,Electronic check,32,2608,Not Churn,0.7191684766079347,2024-06-28 17:20:14,Gradient Boosting🚀
 Male,0,Yes,Yes,6,Yes,Yes,DSL,Yes,Yes,Yes,Yes,Yes,Yes,Month-to-month,Yes,Electronic check,32,2608,Not Churn,0.5503097682919044,2024-06-28 17:20:35,Logistic Regression🛸
+Male,0,Yes,Yes,12,Yes,Yes,DSL,Yes,Yes,Yes,Yes,Yes,Yes,Month-to-month,Yes,Electronic check,35,2621,Not Churn,0.775974009904012,2024-06-28 17:52:16,Gradient Boosting🚀
+Male,0,Yes,Yes,12,Yes,Yes,DSL,Yes,Yes,Yes,Yes,Yes,Yes,Month-to-month,Yes,Electronic check,35,2621,Not Churn,0.538660861417951,2024-06-28 17:52:56,Logistic Regression🛸
+Male,0,Yes,Yes,10,Yes,Yes,DSL,Yes,Yes,Yes,Yes,Yes,Yes,Month-to-month,Yes,Electronic check,32,2444,Not Churn,0.7191684766079347,2024-06-28 18:12:08,Gradient Boosting🚀
+Male,0,Yes,Yes,10,Yes,Yes,DSL,Yes,Yes,Yes,Yes,Yes,Yes,Month-to-month,Yes,Electronic check,32,2444,Not Churn,0.5207308273774904,2024-06-28 18:12:46,Logistic Regression🛸

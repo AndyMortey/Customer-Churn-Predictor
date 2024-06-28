@@ -1,0 +1,16 @@
+credentials:
+  usernames:
+    customerchurn:
+      email: morteyandrews@gmail.com
+      #failed_login_attempts: 0 # Will be managed automatically
+      logged_in: False # Will be managed automatically
+      name: Customer Churn User
+      password: $2b$12$e9JFcn6H.EAzidZV5UlYL.6sJadKVSpC7ltf7VZlbI0vU.MCnfHgm # Will be hashed automatically
+    
+cookie:
+  expiry_days: 0
+  key: some_signature_key # Must be string
+  name: some_cookie_name
+pre-authorized:
+  emails:
+  - andy.mortey@azubiafrica.org

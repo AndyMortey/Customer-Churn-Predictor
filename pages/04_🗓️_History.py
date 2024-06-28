@@ -34,7 +34,7 @@ if st.session_state["authentication_status"]:
 # Function to load history data
 @st.cache_data(persist=True)
 def load_history():
-    csv_path = "Datasets/history.csv"  # Adjust the path accordingly
+    csv_path = "Datasets\history.csv"  # Adjust the path accordingly
     if os.path.exists(csv_path):
         return pd.read_csv(csv_path)
     else:
@@ -58,10 +58,6 @@ def display_history_of_all_predictions():
 
         # Display filtered data
         st.dataframe(filtered_history)
-
-        # Data visualization (optional)
-        st.subheader("Data Visualization")
-        # Add your visualization code here as per your requirements
 
         # Download option
         st.subheader("Download Data")

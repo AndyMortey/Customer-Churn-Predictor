@@ -74,7 +74,7 @@ if st.session_state["authentication_status"]:
             st.write(" ")
 
             fig4, ax4 = plt.subplots()
-            sns.countplot(data=df, x="SeniorCitizen", hue="churn", palette={"No": "grey", "Yes": "Brown"}, ax=ax4)
+            sns.countplot(data=df, x="seniorcitizen", hue="churn", palette={"No": "grey", "Yes": "Brown"}, ax=ax4)
             ax4.set_title('Churn by Senior Citizen', fontsize=10)
             ax4.set_xlabel('Senior Citizen', fontsize=8)
             ax4.set_ylabel('Count', fontsize=8)
@@ -90,7 +90,7 @@ if st.session_state["authentication_status"]:
             st.pyplot(fig2)
 
             fig3, ax3 = plt.subplots()
-            sns.countplot(data=df, x="PaymentMethod", hue="churn", palette={"No": "grey", "Yes": "brown"}, ax=ax3)
+            sns.countplot(data=df, x="paymentmethod", hue="churn", palette={"No": "grey", "Yes": "brown"}, ax=ax3)
             ax3.set_title('Payment Method Distribution by Churn', fontsize=10)
             ax3.set_xlabel('Payment Method', fontsize=8)
             ax3.set_ylabel('Count', fontsize=8)
@@ -107,7 +107,7 @@ if st.session_state["authentication_status"]:
         st.pyplot(fig5)
 
         st.write("### Histograms for Numerical Features")
-        num_features = ['tenure', 'MonthlyCharges', 'TotalCharges']
+        num_features = ['tenure', 'monthlycharges', 'totalcharges']
         fig6, axs = plt.subplots(1, len(num_features), figsize=(15, 5))
         for i, feature in enumerate(num_features):
             sns.histplot(filtered_df[feature], kde=True, ax=axs[i], color='brown')

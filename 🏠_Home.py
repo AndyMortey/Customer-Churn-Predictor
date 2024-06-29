@@ -35,7 +35,7 @@ if st.session_state.get("authentication_status"):
 
     # Main title and banner image
     st.title("Customer Churn Predictor")
-    st.image("assets/Medium2.Png", caption="", use_column_width=True)
+    st.image("assets/Medium2.png", caption="", use_column_width=True)
 
     # Set up three columns
     col1, col2, col3 = st.columns([1, 1, 1])

@@ -35,7 +35,7 @@ if st.session_state["authentication_status"]:
     st.title("Customer Churn Database 🧮")
 
     # Load dataset
-    df = pd.read_csv('Datasets\merged_dataset.csv')
+    df = pd.read_csv('Datasets/merged_dataset.csv')
 
     # Full dataset section
     st.markdown("<h2 style='font-size:24px;'>Full Dataset</h2>", unsafe_allow_html=True)

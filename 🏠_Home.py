@@ -93,13 +93,13 @@ if st.session_state.get("authentication_status"):
     nav_col1, nav_col2, nav_col3 = st.columns(3)
     with nav_col1:
         if st.button("Predict Churn"):
-            st.write("Navigate to Predict Page")  # Replace with navigation logic if available
+            st.write("Navigate to the SideBar")  # Replace with navigation logic if available
     with nav_col2:
         if st.button("Bulk Predictions"):
-            st.write("Navigate to Bulk Predictions Page")  # Replace with navigation logic if available
+            st.write("Navigate to the SideBar")  # Replace with navigation logic if available
     with nav_col3:
         if st.button("View History"):
-            st.write("Navigate to History Page")  # Replace with navigation logic if available
+            st.write("Navigate to the SideBar")  # Replace with navigation logic if available
 
 elif st.session_state.get("authentication_status") is False:
     st.error("Wrong username/password")

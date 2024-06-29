@@ -29,7 +29,7 @@ name, authentication_status, username = authenticator.login(location="sidebar")
 if st.session_state["authentication_status"]:
     authenticator.logout("Logout", location="sidebar") 
 
-    df = pd.read_csv('Datasets\merged_dataset.csv')
+    df = pd.read_csv('Datasets/merged_dataset.csv')
     df.dropna(inplace=True)
 
     dashboard_selection = st.sidebar.selectbox("Select Dashboard", ['EDA Dashboard', 'KPI Dashboard'])
@@ -136,25 +136,25 @@ if st.session_state["authentication_status"]:
             st.write(" ")
             st.metric(label = "F1 Score⚖️", value="76.9%")
 
-        image = Image.open("assets\ROC Curve.png")
+        image = Image.open("assets/ROC Curve.png")
         st.image(image, caption="ROC Curve", use_column_width=True)
 
         st.write("### Confusion Matrices")
         col1, col2 = st.columns(2)
         with col1:
-            image1 = Image.open('assets\Confusion Matrix LR.png')
+            image1 = Image.open('assets/Confusion Matrix LR.png')
             st.image(image1, caption="Logistic Regression", use_column_width=True)
         with col2:
-            image3 = Image.open('assets\Confusion Matrix GB.png')
+            image3 = Image.open('assets/Confusion Matrix GB.png')
             st.image(image3, caption="Gradient Boosting", use_column_width=True)
 
         st.write("#### Confusion Matrices after Tuning")
         col7, col8 = st.columns(2)
         with col7:
-            image1 = Image.open('assets\Confusion Matrix Tuned LR.png')
+            image1 = Image.open('assets/Confusion Matrix Tuned LR.png')
             st.image(image1, caption="Logistic Regression @ LR_threshold = 0.22", use_column_width=True)
         with col8:
-            image3 = Image.open('assets\Confusion Matrix Tuned GB.png')
+            image3 = Image.open('assets/Confusion Matrix Tuned GB.png')
             st.image(image3, caption="Gradient Boosting @ gradient_threshold = 0.25", use_column_width=True)
 
 elif st.session_state["authentication_status"] is False:
